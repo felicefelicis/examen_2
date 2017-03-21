@@ -19,25 +19,23 @@ MongoClient.connect('mongodb://127.0.0.1:27017/ville-carnet', (err, database) =>
   })
 })
 
+//pour afficher le fichier index.ejs
 app.get('/',  (req, res) => {
-   console.log('la route route get / = ' + req.url)
- 
-    var cursor = db.collection('province').find().toArray(function(err, resultat){
-       if (err) return console.log(err)
-    // renders index.ejs
-    // affiche le contenu de la BD
-    res.render('index.ejs', {adresse: resultat})
+	res.render("index.ejs");
 
-    }) 
 })
 
-app.get('/ajouter', function (req, res) {
-   // on l'ajoute au fichier
-   fs.load( "/public/text/collection_provinces.json");
+var server = app.listen(8080, function () {
+   var host = server.address().address
+   var port = server.address().port
+
+   console.log("L'application écoute sur http://%s", host, port)
 })
 
-
-app.get('/formulaire',  (req, res) => {
-   console.log('la route  get / = ' + req.url)
-   res.sendFile(__dirname + "index.ejs")
+//etape 1
+app.get('/fichier', function (req, res) {
+	fs.readFile( __dirname + "/public/text/" + "collection_provinces.json", 'utf8', function (err, data) {
+		console.log( data );
+		res.end(data);
+	});
 })
