@@ -35,6 +35,7 @@ var server = app.listen(8080, function () {
 //etape #1
 app.get('/fichier', function (req, res) {
 	fs.readFile( __dirname + "/public/text/" + "collection_provinces.json", 'utf8', function (err, data) {
+		if(err) return next(err);
 		console.log( data );
 		res.end(data);
 	});
@@ -43,6 +44,7 @@ app.get('/fichier', function (req, res) {
 //etape #2
 app.get('/provinces', function (req, res) {
 	fs.readFile( __dirname + "/public/text/" + "collection_provinces.json", 'utf8', function (err, data) {
+		if(err) return next(err);
 		console.log( data );
 		res.render('index.ejs', {provinces : JSON.parse(data)})
 	});
