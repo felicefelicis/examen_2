@@ -11,7 +11,7 @@ app.use(express.static('public'))  // pour utiliser le dossier public
 app.use(bodyParser.json())  // pour traiter les données JSON
 
 
-MongoClient.connect('mongodb://127.0.0.1:27017/ville-carnet', (err, database) => {
+MongoClient.connect('mongodb://127.0.0.1:27017/carnet', (err, database) => {
   if (err) return console.log(err)
   db = database
   app.listen(8081, () => {
@@ -32,10 +32,31 @@ var server = app.listen(8080, function () {
    console.log("L'application écoute sur http://%s", host, port)
 })
 
-//etape 1
+//etape #1
 app.get('/fichier', function (req, res) {
 	fs.readFile( __dirname + "/public/text/" + "collection_provinces.json", 'utf8', function (err, data) {
 		console.log( data );
 		res.end(data);
 	});
 })
+
+//etape #2
+app.get('/provinces', function (req, res) {
+	fs.readFile( __dirname + "/public/text/" + "collection_provinces.json", 'utf8', function (err, data) {
+		console.log( data );
+		res.render('index.ejs', {provinces : JSON.parse(data)})
+	});
+})
+
+//etape #3
+
+//etape #4
+/*
+db.collection('province').insertOne(newRecord, (err, resultat) => {
+    if(err) return next(err);
+    res.send({ "id": resultat.insertedId });
+  }); 
+};*/
+//etape #5
+
+//etape #6

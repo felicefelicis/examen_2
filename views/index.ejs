@@ -11,7 +11,6 @@
   	  	<h1>Épreuve finale volet II - Programmation et veille technologique</h1>
   	  	<h2>Node.js, Express, MongoDB, EJS</h2>
   	  	<nav>
-
   	  		<a href="http://localhost:8081/fichier">1-Fichier</a>
   	  		<a href="http://localhost:8081/provinces">2-Provinces</a>
   	  		<a href="http://localhost:8081/collection">3-Collection</a>
@@ -22,9 +21,14 @@
   	  </header>
   	  <main>
 		  <table class="tableau">
-
-    </div>
-		  </table>
+        <% for(var i=0; i< provinces.length; i++) {%>
+            <tr>
+              <td><%= provinces[i].code %></td>
+              <td><%= provinces[i].nom %></td>
+              <td><%= provinces[i].capital %></td>
+            </tr>    
+          <% } %>
+        </table>
 	  </main>
 	  <footer>
 	  <p>Epreuve finale volet II - Programmation et veille technologique - TIM - Collège de Maisonneuve</p>
