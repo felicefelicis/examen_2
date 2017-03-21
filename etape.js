@@ -48,6 +48,7 @@ app.get('/provinces',  (req, res, next) => {
 });
 
 //etape #3
+// Je ne suis pas certaine qu'il se connecte a la bonne BDD par contre... j'ai mes anciennes données qui s'y accumule
 app.get('/collection',  (req, res, next) => {
 	var cursor = db.collection('adresse').find().toArray(function(err, resultat){
       if(err) return next(err);
@@ -57,10 +58,11 @@ app.get('/collection',  (req, res, next) => {
 
 //etape #4
 app.get('/ajouter',  (req, res, next) => {
+	//prend un chiffre random
 	var chiffreRandom = Math.floor((Math.random()*100))+100;
 	var cursor = db.collection('adresse').find().toArray(function(err, resultat){
       if(err) return next(err);
-
+      // ce que je vais ajouter #toujoursLaMêmeChose
       db.collection('adresse').insertOne({
 			"code" : "QC",
 			"nom" : "Québec",
@@ -68,10 +70,19 @@ app.get('/ajouter',  (req, res, next) => {
       })
       res.render('index.ejs', {adresse: resultat});
     })
+    //retour a l'acceuil
     res.redirect('/');
 });
 
 //etape #5
+// ajouter plusieurs?
 
 //etape #6
-
+app.get('/supprimer',  (req, res, next) => {
+	var cursor = db.collection('adresse').find().toArray(function(err, resultat){
+      if(err) return next(err);
+      db.collection('adresse').deleteMany()
+    })
+    //retour a l'acceuil
+    res.redirect('/');
+});
