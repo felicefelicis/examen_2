@@ -19,7 +19,8 @@ MongoClient.connect('mongodb://127.0.0.1/carnet', (err, database) => {
   })
 })
 
-// collection yeah
+// collection yeah alors j'ai buggé litteralement 2H :( parce qu'il me manquait ce petit bout de code en entier.  
+// Je voudrais remercier mon TP de m'avoir rappeler que je n'avais pas tout...
 app.get('/',  (req, res, next) => {
     var cursor = db.collection('adresse').find().toArray(function(err, resultat){
     if(err) return next(err);
