@@ -5,8 +5,6 @@ const MongoClient = require('mongodb').MongoClient
 const ObjectID = require('mongodb').ObjectID;
 const app = express();
 
-var bdd = "text/collection_provinces.json"
-
 app.set('view engine', 'ejs'); // générateur de template 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static('public'))  // pour utiliser le dossier public
@@ -24,13 +22,18 @@ MongoClient.connect('mongodb://127.0.0.1:27017/ville-carnet', (err, database) =>
 app.get('/',  (req, res) => {
    console.log('la route route get / = ' + req.url)
  
-    var cursor = db.collection('adresse').find().toArray(function(err, resultat){
+    var cursor = db.collection('province').find().toArray(function(err, resultat){
        if (err) return console.log(err)
     // renders index.ejs
     // affiche le contenu de la BD
     res.render('index.ejs', {adresse: resultat})
 
     }) 
+})
+
+app.get('/ajouter', function (req, res) {
+   // on l'ajoute au fichier
+   fs.load( "/public/text/collection_provinces.json");
 })
 
 
