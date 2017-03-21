@@ -27,14 +27,6 @@ app.get('/',  (req, res, next) => {
 	});
 })
 
-/*var server = app.listen(8080, function () {
-   var host = server.address().address
-   var port = server.address().port
-
-   console.log("L'application écoute sur http://%s", host, port)
-})
-*/
-
 //etape #1
 app.get('/fichier', function (req, res) {
 	fs.readFile( __dirname + "/public/text/" + "collection_provinces.json", 'utf8', function (err, data) {
@@ -46,24 +38,40 @@ app.get('/fichier', function (req, res) {
 
 //etape #2
 app.get('/provinces',  (req, res, next) => {
-	var obj;
+	var bddJson;
 	fs.readFile( __dirname + "/public/text/" + "collection_provinces.json", 'utf8', function (err, data) {
 		if(err) return console.error(err);
-		obj = JSON.parse(data);
-		console.log(obj);
-		res.render('index.ejs', {adresse: obj});
+		bddJson = JSON.parse(data);
+		console.log(bddJson);
+		res.render('index.ejs', {adresse: bddJson});
 	});
 });
 
 //etape #3
+app.get('/collection',  (req, res, next) => {
+	var cursor = db.collection('adresse').find().toArray(function(err, resultat){
+      if(err) return next(err);
+      res.render('index.ejs', {adresse: resultat});
+    })
+});
 
 //etape #4
-/*
-db.collection('carnet').insertOne(newRecord, (err, resultat) => {
-    if(err) return next(err);
-    res.send({ "id": resultat.insertedId });
-  }); 
-};*/
+app.get('/ajouter',  (req, res, next) => {
+	var chiffreRandom = Math.floor((Math.random()*100))+100;
+	var cursor = db.collection('adresse').find().toArray(function(err, resultat){
+      if(err) return next(err);
+
+      db.collection('adresse').insertOne({
+			"code" : "QC",
+			"nom" : "Québec",
+			"capital": chiffreRandom
+      })
+      res.render('index.ejs', {adresse: resultat});
+    })
+    res.redirect('/');
+});
+
 //etape #5
 
 //etape #6
+
